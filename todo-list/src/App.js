@@ -17,6 +17,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <ToDoList toDoList={toDoList}/>
     </div>
   );
 }
