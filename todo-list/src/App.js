@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect} from 'react'
 import logo from './logo.svg';
 import './App.css';
-
 //Components
 import Header from "./Header.js"
 import data from "./data.json"
@@ -13,6 +12,14 @@ import ToDoForm from "./ToDoForm.js"
 function App() {
 
   const [ toDoList, setToDoList ] = useState(data);
+  const [dat, setData] = useState(null);
+  
+  useEffect(() =>{
+    fetch("http://localhost:3001/api")
+      .then((res) => res.json())
+      .then((dat) => setData(dat.message))
+    console.log("hello")
+  }, [])
 
   const handleToggle = (id) => {
     let mapped = toDoList.map(task => {
@@ -39,6 +46,7 @@ const addTask = ( userInput ) => {
       <Header />
       <ToDoList toDoList={toDoList} handleToggle={handleToggle} handleFilter={handleFilter}/>
       <ToDoForm addTask={addTask}/>
+      <p>{!dat ? "Loading..." : dat}</p>
     </div>
   );
 }
