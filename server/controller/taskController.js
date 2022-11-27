@@ -22,3 +22,26 @@ export const getTaskById  = asyncHandler(async(req, res) => {
     }
 })
 
+
+export const deleteTask = asyncHandler(async(req, res) => {
+
+    Task.findByIdAndRemove({id: req.params.id})
+        .then(data => {
+            if(!data) {
+                res.status(404).send({
+                    message: "Task not found"
+                });
+            }else {
+                res.send({
+                    message: "Task Deleted!"
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error could not delete "
+            })
+        })
+    
+})
+
